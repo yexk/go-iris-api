@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  nginx:
+    image: nginx:1.18.0
+    ports:
+      - "80:80"
+    volumes:
+      - "./server/nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./server/nginx/conf.d:/etc/nginx/conf.d"
+      - "./runtime/nginx/log:/var/log/nginx"
+  mygo:
+    build: .
+    volumes:
+      - ".:/go/src"
+  mysql:
+    image: mysql:5.7.30
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - "./runtime/mysql/data:/var/lib/mysql"
+      - "./server/mysql/conf:/etc/mysql/conf.d"
+  redis:
+    image: redis:5.0.9
+    ports:
+      - "6379:6379"
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    volumes:
+      - "./runtime/redis/data/:/data/"
+  mongo:
+    image: mongo
+    volumes:
+      - "./runtime/mongo:/data/db"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    tty: true
