@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"server/app/common"
 
 	"gorm.io/gorm"
@@ -14,7 +13,15 @@ type Books struct {
 	Tags     string
 }
 
-func CreateData(book *Books) {
-	fmt.Print("1231")
-	common.GetDB().Create(&book)
+func _init() (err error) {
+	// create table
+	err = common.GetDB().AutoMigrate(&Books{})
+	return err
+}
+
+func CreateData(book *Books) (db *gorm.DB, err error) {
+	_init()
+
+	db = common.GetDB().Create(&book)
+	return
 }

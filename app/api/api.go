@@ -13,7 +13,6 @@ func Main() {
 	if err != nil {
 		panic(err)
 	}
-
 	app := iris.New()
 	app.Logger().SetLevel(config.AppEnv)
 

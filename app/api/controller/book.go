@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"server/app/service"
 )
 
 type BookController struct {
@@ -14,7 +15,7 @@ func (b *BookController) Get() string {
 
 func (b *BookController) GetShow() string {
 	fmt.Print("helle world")
-	// service.CreateBooks()
+	service.CreateBooks()
 	return "helle world"
 }
 
